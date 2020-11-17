@@ -26,5 +26,12 @@ namespace Workshop.Controllers
 
             return View();
         }
+
+        public ActionResult Information()
+        {
+            ViewBag.Message = "Page information.";
+
+            return View();
+        }
     }
 }
