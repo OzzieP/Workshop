@@ -21,6 +21,27 @@ namespace Workshop.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult GestionImprevu(FormCollection collection)
+        {
+            try
+            {
+                Dictionary<String, Boolean> arr = new Dictionary<string, bool>();
+                arr.Add("C1-VR1", false);
+                arr.Add("C1-VR2", false);
+                arr.Add("C1-HR1", true);
+                arr.Add("C1-HR2", true);
+
+                ViewBag.stateFeux = arr;
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
