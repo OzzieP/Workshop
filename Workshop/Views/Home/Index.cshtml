@@ -15,10 +15,9 @@
     <div class="carrefour"></div>
 </div>
 
-
 <i class="material-icons arrow arrow1pos">arrow_downward</i>
 <div class="G1">
-    @if (ViewBag.stateFeux["C1-VR1"])
+    @if (ViewBag.stateFeux["C1-VR1"].etat)
     {
         <i id="C1-VR1" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-VP1" class="material-icons feux red">directions_walk</i>
@@ -42,7 +41,7 @@
 
 <i class="material-icons arrow arrow2pos">arrow_back</i>
 <div class="G2">
-    @if (ViewBag.stateFeux["C1-HR2"])
+    @if (ViewBag.stateFeux["C1-HR2"].etat)
     {
         <i id="C1-HR2" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-HP2" class="material-icons feux red">directions_walk</i>
@@ -67,7 +66,7 @@
 
 <i class="material-icons arrow arrow3pos">arrow_upward</i>
 <div class="G3">
-    @if (ViewBag.stateFeux["C1-VR2"])
+    @if (ViewBag.stateFeux["C1-VR2"].etat)
     {
         <i id="C1-VR2" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-VP2" class="material-icons feux red">directions_walk</i>
@@ -92,7 +91,7 @@
 
 <i class="material-icons arrow arrow4pos">arrow_forward</i>
 <div class="G4">
-    @if (ViewBag.stateFeux["C1-HR1"])
+    @if (ViewBag.stateFeux["C1-HR1"].etat)
     {
         <i id="C1-HR1" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-HP1" class="material-icons feux red">directions_walk</i>
@@ -123,19 +122,19 @@
             {
                 <div class="custom-control custom-radio">
                     <label class="custom-control-label" for="C1-VR1">
-                        @if (item.matricule == "C1-VR1")
+                        @if (item.matricule == "C1-HR1")
                         {
                             <i class="material-icons">arrow_downward</i>
                         }
-                        else if (item.matricule == "C1-HR2")
+                        else if (item.matricule == "C1-VR2")
                         {
                             <i class="material-icons">arrow_back</i>
                         }
-                        else if (item.matricule == "C1-VR2")
+                        else if (item.matricule == "C1-HR2")
                         {
                             <i class="material-icons">arrow_upward</i>
                         }
-                        else if (item.matricule == "C1-HR1")
+                        else if (item.matricule == "C1-VR1")
                         {
                             <i class="material-icons">arrow_forward</i>
                         }
