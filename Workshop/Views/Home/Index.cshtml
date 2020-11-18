@@ -5,15 +5,16 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="background">
-    <div class="route1">
-        <div class="route1bis"></div>
+<div class="index-container">
+    <div class="background">
+        <div class="route1">
+            <div class="route1bis"></div>
+        </div>
+        <div class="route2">
+            <div class="route2bis"></div>
+        </div>
+        <div class="carrefour"></div>
     </div>
-    <div class="route2">
-        <div class="route2bis"></div>
-    </div>
-    <div class="carrefour"></div>
-</div>
 
 <i class="material-icons arrow arrow1pos">arrow_downward</i>
 <div class="G1">
@@ -28,16 +29,16 @@
         <i id="C1-VP1" class="material-icons feux green">directions_walk</i>
     }
 
-</div>
-<div class="pieton1">
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-</div>
+    </div>
+    <div class="pieton1">
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+    </div>
 
 <i class="material-icons arrow arrow2pos">arrow_back</i>
 <div class="G2">
@@ -51,18 +52,29 @@
         <i id="C1-HR2" class="material-icons feux red">fiber_manual_record</i>
         <i id="C1-HP2" class="material-icons feux green">directions_walk</i>
 
-    }
+    <div class="pieton2">
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+    </div>
 
-</div>
-<div class="pieton2">
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-</div>
+    <i class="material-icons arrow arrow3pos">arrow_upward</i>
+    <div class="G3">
+        @if (ViewBag.stateFeux["C1-VR2"])
+        {
+            <i id="C1-VR2" class="material-icons feux green">fiber_manual_record</i>
+            <i id="C1-VP2" class="material-icons feux red">directions_walk</i>
+        }
+        else
+        {
+            <i id="C1-VR2" class="material-icons feux red">fiber_manual_record</i>
+            <i id="C1-VP2" class="material-icons feux green">directions_walk</i>
+        }
+
 
 <i class="material-icons arrow arrow3pos">arrow_upward</i>
 <div class="G3">
@@ -77,47 +89,44 @@
         <i id="C1-VP2" class="material-icons feux green">directions_walk</i>
     }
 
+    </div>
+    <div class="pieton3">
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+        <div class="barp1"></div>
+    </div>
 
-</div>
-<div class="pieton3">
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-    <div class="barp1"></div>
-</div>
-
-<i class="material-icons arrow arrow4pos">arrow_forward</i>
-<div class="G4">
+    <i class="material-icons arrow arrow4pos">arrow_forward</i>
+    <div class="G4">
     @if (ViewBag.stateFeux["C1-HR1"].etat)
     {
         <i id="C1-HR1" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-HP1" class="material-icons feux red">directions_walk</i>
     }
     else
+        {
+            <i id="C1-HR1" class="material-icons feux red">fiber_manual_record</i>
+            <i id="C1-HP1" class="material-icons feux green">directions_walk</i>
+        }
+
+    </div>
+    <div class="pieton4">
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+    </div>
+
+    @using (Html.BeginForm("GestionImprevu", "Home", FormMethod.Post, new { @class = "form-group posForm" }))
     {
-        <i id="C1-HR1" class="material-icons feux red">fiber_manual_record</i>
-        <i id="C1-HP1" class="material-icons feux green">directions_walk</i>
-    }
-
-</div>
-<div class="pieton4">
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-    <div class="barp2"></div>
-</div>
-
-
-@using (Html.BeginForm("GestionImprevu", "Home", FormMethod.Post, new { @class = "form-group posForm" }))
-{
-    <div class="row">
-        <div class="col">
+        <div clss="inputs">
             @foreach (Feu item in Model.Feux)
             {
                 <div class="custom-control custom-radio">
@@ -142,8 +151,9 @@
                     @Html.TextBox(item.matricule, null, new { @type = "number", @class = "form-control", @placeholder = "Nombre de voiture a ajouter sur la voie" })
                 </div>
             }
-
-            <button type="submit" class="btn btn-primary">Valider</button>
         </div>
-    </div>
-}
+
+
+        <button type="submit" class="btn btn-primary">Valider</button>
+    }
+</div>

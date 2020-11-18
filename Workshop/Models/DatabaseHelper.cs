@@ -11,9 +11,7 @@ namespace Workshop.Models
 {
     public class DatabaseHelper
     {
-        private MySqlConnectionStringBuilder _builder { get; set; }
-
-        private string _connectionString { get; set; }
+        public MySqlConnectionStringBuilder Builder { get; set; }
 
 
         public DatabaseHelper()
@@ -135,7 +133,7 @@ namespace Workshop.Models
 
         public void insertOneEtat(Etat etat)
         {
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
@@ -154,7 +152,7 @@ namespace Workshop.Models
 
         public void insertOneFeu(Feu feu)
         {
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
@@ -171,7 +169,7 @@ namespace Workshop.Models
         {
             Dictionary<string, Feu> feux = new Dictionary<string, Feu>();
 
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
@@ -198,18 +196,18 @@ namespace Workshop.Models
             return feux;
         }
 
-        public List<Etat> SelectNombreVoitureParVoie()
+        public List<Etat> SelectNombreVoitureParVoie(int jour)
         {
             List<Etat> etat = new List<Etat>();
 
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT e.jour, f.idFeu, f.matricule, SUM(e.nbPassant) as nombre FROM etat e INNER JOIN feu f ON e.idFeu = f.idFeu GROUP BY f.matricule, e.jour";
-
+                    command.CommandText = "SELECT e.jour, f.idFeu, f.matricule, SUM(e.nbPassant) as nombre FROM etat e INNER JOIN feu f ON e.idFeu = f.idFeu WHERE e.jour = @jour GROUP BY f.matricule, e.jour";
+                    command.Parameters.AddWithValue("@jour", jour);
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
