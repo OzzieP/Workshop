@@ -32,7 +32,10 @@ namespace Workshop.Controllers
 
         public ActionResult Information()
         {
+            DatabaseHelper database = new DatabaseHelper();
+            List<Etat> etats = database.SelectNombreVoitureParVoie();
             ViewBag.Message = "Page information.";
+            ViewBag.data = etats;
 
             return View();
         }

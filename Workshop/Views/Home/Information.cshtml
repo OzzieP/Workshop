@@ -1,7 +1,27 @@
 ﻿
 @{
     ViewBag.Title = "Information";
-}
 
-<h2>Information</h2>
+
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Jours</th>
+            <th scope="col">Matricule</th>
+            <th scope="col">Nombre de voiture</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var etat in ViewBag.data)
+        {
+            <tr>
+                <th scope="row">@etat.jour</th>
+                <td>@etat.feu.matricule</td>
+                <td>@etat.nbPassant</td>
+            </tr>
+        }
+        
+    </tbody>
+</table>
 

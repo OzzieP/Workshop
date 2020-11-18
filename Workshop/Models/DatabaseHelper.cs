@@ -195,6 +195,45 @@ namespace Workshop.Models
             return feux;
         }
 
+        public List<Etat> SelectNombreVoitureParVoie()
+        {
+            List<Etat> etat = new List<Etat>();
+
+            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            {
+                connection.Open();
+
+                using (MySqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT e.jour, f.idFeu, f.matricule, SUM(e.nbPassant) as nombre FROM etat e INNER JOIN feu f ON e.idFeu = f.idFeu GROUP BY f.matricule, e.jour";
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Feu feu = new Feu
+                            {
+                                idFeu = reader.GetInt32("idFeu"),
+                                matricule = reader.GetString("matricule")
+                            };
+
+                            Etat unEtat = new Etat
+                            {
+                                jour = (JourEnum)reader.GetInt32("jour"),
+                                feu = feu,
+                                nbPassant = reader.GetInt32("nombre"),
+                                etat = false
+                            };
+
+                            etat.Add(unEtat);
+                        }
+                    }
+                }
+            }
+
+            return etat;
+        }
+
 
         // CECI EST UN EXEMPLE
         //public List<Personne> SelectPersonne()
