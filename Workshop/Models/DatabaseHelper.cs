@@ -170,22 +170,22 @@ namespace Workshop.Models
         {
             Dictionary<string, Feu> feux = new Dictionary<string, Feu>();
 
-            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
+                var query = "SELECT * FROM feu";
 
-                using (MySqlCommand command = connection.CreateCommand())
+                using (SqlCommand command = new SqlCommand(query , connection))
                 {
-                    command.CommandText = "SELECT * FROM feu";
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
-                        { 
+                        {
                             Feu feu = new Feu
                             {
-                                idFeu = reader.GetInt32("idFeu"),
-                                matricule = reader.GetString("matricule")
+                                idFeu = (int)reader["idFeu"],
+                                matricule = reader["matricule"].ToString()
                             };
 
                             feux.Add(feu.matricule, feu);
@@ -201,29 +201,29 @@ namespace Workshop.Models
         {
             List<Etat> etat = new List<Etat>();
 
-            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
+                string query = "SELECT e.jour, f.idFeu, f.matricule, SUM(e.nbPassant) as nombre FROM etat e INNER JOIN feu f ON e.idFeu = f.idFeu WHERE e.jour = @jour GROUP BY f.idFeu, f.matricule, e.jour";
 
-                using (MySqlCommand command = connection.CreateCommand())
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.CommandText = "SELECT e.jour, f.idFeu, f.matricule, SUM(e.nbPassant) as nombre FROM etat e INNER JOIN feu f ON e.idFeu = f.idFeu WHERE e.jour = @jour GROUP BY f.matricule, e.jour";
                     command.Parameters.AddWithValue("@jour", jour);
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             Feu feu = new Feu
                             {
-                                idFeu = reader.GetInt32("idFeu"),
-                                matricule = reader.GetString("matricule")
+                                idFeu = (int)reader["idFeu"],
+                                matricule = reader["matricule"].ToString()
                             };
 
                             Etat unEtat = new Etat
                             {
-                                jour = (JourEnum)reader.GetInt32("jour"),
+                                jour = (JourEnum)reader["jour"],
                                 feu = feu,
-                                nbPassant = reader.GetInt32("nombre"),
+                                nbPassant = (int)reader["nombre"],
                                 etat = false
                             };
 
@@ -281,19 +281,24 @@ namespace Workshop.Models
                 heureCinqMinutesAvant -= 1;
             }
             int jour = (int)DateTime.Today.DayOfWeek;
-            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
+            DateTime dateTime1 = new DateTime(2000, 01, 01, heureCinqMinutesAvant, cinqMinutesAvant, 0);
+            DateTime dateTime2 = new DateTime(2000, 01, 01, heure, minute, 0);
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-
-                using (MySqlCommand command = connection.CreateCommand())
+                string query = "select etat from etat inner join feu on feu.idFeu = etat.idFeu where feu.matricule = @matricule and etat.horaire > @datetime1 and etat.horaire < @datetime2 and etat.jour = @jour";
+                using (SqlCommand command = new SqlCommand())
                 {
-                    command.CommandText = "select etat from etat inner join feu on feu.idFeu = etat.idFeu where feu.matricule = '"+matricule+ "' and etat.horaire > '0001-01-01 " + heureCinqMinutesAvant + ":" + cinqMinutesAvant + ":00' and etat.horaire < '0001-01-01 " + heure + ":" + minute + ":00' and etat.jour = "+jour;
+                    command.Parameters.Add(new SqlParameter("@matricule", matricule));
+                    command.Parameters.Add(new SqlParameter("@jour", jour));
+                    command.Parameters.Add(new SqlParameter("@datetime1", dateTime1));
+                    command.Parameters.Add(new SqlParameter("@datetime2", dateTime2));
 
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            falseLastFiveMinutes = (int)reader.GetInt32("etat") != 0 ? false : falseLastFiveMinutes;
+                            falseLastFiveMinutes = (bool)reader["etat"]; /*!= 0 ? false : falseLastFiveMinutes*/
                         }
                     }
                 }
