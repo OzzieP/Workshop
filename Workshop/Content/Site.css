@@ -1,8 +1,6 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    width: 100vw;
-    height: 100vh;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -26,31 +24,51 @@ textarea {
 }
 
 .index-container {
-    width: 100%;
-    height: 100%
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .background {
-    top: 76px;
+    position: absolute;
+    top: 0;
     right: 0;
     left: 0;
     bottom: 0;
 }
 .posForm {
     position: absolute;
-    top:15%;
-    left:5%;
+    top: 40px;
+    left: 40px;
+    width: 328px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.posForm .inputs div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.posForm input {
+    margin-bottom: 14px;
+    min-width: 300px !important;
+    display: inline-block;
 }
 .route1 {
     width: 300px;
-    height: calc(100vh - 56px);
+    height: 100%;
     background-color: gray;
     margin-left: calc(50% - 150px);
 }
 
 .route2 {
     position: absolute;
-    width: 100vw;
+    width: 100%;
     height: 300px;
     background-color: gray;
     top: calc(50% - 150px);
@@ -58,14 +76,14 @@ textarea {
 
 .route1bis {
     border-right: dashed white;
-    height: calc(100vh - 56px);
+    height: 100%;
     width: 150px;
 }
 
 .route2bis {
     border-bottom: dashed white;
     height: 150px;
-    width: 100vw;
+    width: 100%;
 }
 
 .carrefour {
@@ -105,8 +123,6 @@ textarea {
     margin-left: 20px;
     background-color: white;
 }
-
-
 
 .arrow2pos {
     position: absolute;
@@ -175,10 +191,6 @@ textarea {
     top: calc(50% - 150px);
     left: 37%;
 }
-
-
-
-
 
 .red {
     color: red;
