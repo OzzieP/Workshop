@@ -10,6 +10,20 @@ namespace Workshop.Controllers
     {
         public ActionResult Index()
         {
+
+            Dictionary<String, Boolean> arr = new Dictionary<string, bool>();
+
+            arr["C1-VR1"] = true;
+            arr["C1-VR2"] = true;
+            arr["C1-HP1"] = true;
+            arr["C1-HP2"] = true;
+            arr["C1-HR1"] = false;
+            arr["C1-HR2"] = false;
+            arr["C1-HV1"] = false;
+            arr["C1-HV2"] = false;
+
+            ViewBag.stateFeux = arr;
+
             return View();
         }
 
