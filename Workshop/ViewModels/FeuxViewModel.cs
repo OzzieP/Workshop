@@ -9,17 +9,17 @@ namespace Workshop.ViewModels
 {
     public class FeuxViewModel
     {
-        public List<TempFeux> Feux { get; set; }
+        public List<Feu> Feux { get; set; }
 
 
         public FeuxViewModel()
         {
-            Feux = new List<TempFeux>
+            Feux = new List<Feu>
             {
-                new TempFeux("C1-VR1", 0),
-                new TempFeux("C1-VR2", 0),
-                new TempFeux("C1-HR1", 0),
-                new TempFeux("C1-HR2", 0)
+                new Feu("C1-VR1"),
+                new Feu("C1-VR2"),
+                new Feu("C1-HR1"),
+                new Feu("C1-HR2")
             };
         }
     }
