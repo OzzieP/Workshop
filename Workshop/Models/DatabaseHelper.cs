@@ -195,7 +195,7 @@ namespace Workshop.Models
             return feux;
         }
 
-        public List<Etat> SelectNombreVoitureParVoie()
+        public List<Etat> SelectNombreVoitureParVoie(int jour)
         {
             List<Etat> etat = new List<Etat>();
 
@@ -205,8 +205,8 @@ namespace Workshop.Models
 
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "SELECT e.jour, f.idFeu, f.matricule, SUM(e.nbPassant) as nombre FROM etat e INNER JOIN feu f ON e.idFeu = f.idFeu GROUP BY f.matricule, e.jour";
-
+                    command.CommandText = "SELECT e.jour, f.idFeu, f.matricule, SUM(e.nbPassant) as nombre FROM etat e INNER JOIN feu f ON e.idFeu = f.idFeu WHERE e.jour = @jour GROUP BY f.matricule, e.jour";
+                    command.Parameters.AddWithValue("@jour", jour);
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())

@@ -70,9 +70,22 @@ namespace Workshop.Controllers
         public ActionResult Information()
         {
             DatabaseHelper database = new DatabaseHelper();
-            List<Etat> etats = database.SelectNombreVoitureParVoie();
+            List<Etat> lundi = database.SelectNombreVoitureParVoie(0);
+            List<Etat> mardi = database.SelectNombreVoitureParVoie(1);
+            List<Etat> mercredi = database.SelectNombreVoitureParVoie(2);
+            List<Etat> jeudi = database.SelectNombreVoitureParVoie(3);
+            List<Etat> vendredi = database.SelectNombreVoitureParVoie(4);
+            List<Etat> samedi = database.SelectNombreVoitureParVoie(5);
+            List<Etat> dimanche = database.SelectNombreVoitureParVoie(6);
             ViewBag.Message = "Page information.";
-            ViewBag.data = etats;
+            ViewBag.lundi = lundi;
+            ViewBag.mardi = mardi;
+            ViewBag.mercredi = mercredi;
+            ViewBag.jeudi = jeudi;
+            ViewBag.vendredi = vendredi;
+            ViewBag.samedi = samedi;
+            ViewBag.dimanche = dimanche;
+
 
             return View();
         }
