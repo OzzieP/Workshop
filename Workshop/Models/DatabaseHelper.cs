@@ -11,10 +11,9 @@ namespace Workshop.Models
 {
     public class DatabaseHelper
     {
+        private string _connectionString;
+
         private MySqlConnectionStringBuilder _builder { get; set; }
-
-        private string _connectionString { get; set; }
-
 
         public DatabaseHelper()
         {
