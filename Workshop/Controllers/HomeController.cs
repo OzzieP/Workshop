@@ -10,7 +10,6 @@ namespace Workshop.Controllers
     {
         public ActionResult Index()
         {
-
             Dictionary<String, Boolean> arr = new Dictionary<string, bool>();
 
             arr["C1-VR1"] = true;
