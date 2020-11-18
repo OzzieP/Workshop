@@ -118,28 +118,28 @@
 {
     <div class="row">
         <div class="col">
-            @foreach (TempFeux item in Model.Feux)
+            @foreach (Feu item in Model.Feux)
             {
                 <div class="custom-control custom-radio">
                     <label class="custom-control-label" for="C1-VR1">
-                        @if (item.Matricule == "C1-VR1")
+                        @if (item.matricule == "C1-VR1")
                         {
                             <i class="material-icons">arrow_downward</i>
                         }
-                        else if (item.Matricule == "C1-HR2")
+                        else if (item.matricule == "C1-HR2")
                         {
                             <i class="material-icons">arrow_back</i>
                         }
-                        else if (item.Matricule == "C1-VR2")
+                        else if (item.matricule == "C1-VR2")
                         {
                             <i class="material-icons">arrow_upward</i>
                         }
-                        else if (item.Matricule == "C1-HR1")
+                        else if (item.matricule == "C1-HR1")
                         {
                             <i class="material-icons">arrow_forward</i>
                         }
                     </label>
-                    @Html.TextBox(item.Matricule, null, new { @type = "number", @class = "form-control", @placeholder = "Nombre de voiture a ajouter sur la voie" })
+                    @Html.TextBox(item.matricule, null, new { @type = "number", @class = "form-control", @placeholder = "Nombre de voiture a ajouter sur la voie" })
                 </div>
             }
 
