@@ -5,15 +5,52 @@ using System.Web;
 using System.Web.Mvc;
 using Workshop.Models;
 
+using Workshop.ViewModels;
+
 namespace Workshop.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            Boolean[] stateFeux = new Boolean[] { true, false, true, false };
-            ViewBag.stateFeux = stateFeux;
-            return View();
+            Dictionary<String, Boolean> arr = new Dictionary<string, bool>();
+
+            arr.Add("C1-VR1", true);
+            arr.Add("C1-VR2", true);
+            arr.Add("C1-HR1", false);
+            arr.Add("C1-HR2", false);
+
+            ViewBag.stateFeux = arr;
+
+            FeuxViewModel viewModel = new FeuxViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult GestionImprevu(FormCollection formCollection)
+        {
+            try
+            {
+                Dictionary<String, Boolean> arr = new Dictionary<string, bool>();
+                arr.Add("C1-VR1", false);
+                arr.Add("C1-VR2", false);
+                arr.Add("C1-HR1", true);
+                arr.Add("C1-HR2", true);
+
+                ViewBag.stateFeux = arr;
+
+                var abc = Request.Form["C1-VR1"];
+                var abc2 = Request.Form["C1-VR2"];
+                var abc3 = Request.Form["C1-HR1"];
+                var abc4 = Request.Form["C1-HR2"];
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         public ActionResult About()

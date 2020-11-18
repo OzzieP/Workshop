@@ -1,4 +1,7 @@
-﻿@{
+﻿@model Workshop.ViewModels.FeuxViewModel
+@using Workshop.Models
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -15,7 +18,7 @@
 
 <i class="material-icons arrow arrow1pos">arrow_downward</i>
 <div class="G1">
-    @if (ViewBag.stateFeux[0])
+    @if (ViewBag.stateFeux["C1-VR1"])
     {
         <i id="C1-VR1" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-VP1" class="material-icons feux red">directions_walk</i>
@@ -39,12 +42,12 @@
 
 <i class="material-icons arrow arrow2pos">arrow_back</i>
 <div class="G2">
-    @if (ViewBag.stateFeux[1])
-     {
+    @if (ViewBag.stateFeux["C1-HR2"])
+    {
         <i id="C1-HR2" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-HP2" class="material-icons feux red">directions_walk</i>
-     }
-        else
+    }
+    else
     {
         <i id="C1-HR2" class="material-icons feux red">fiber_manual_record</i>
         <i id="C1-HP2" class="material-icons feux green">directions_walk</i>
@@ -64,12 +67,12 @@
 
 <i class="material-icons arrow arrow3pos">arrow_upward</i>
 <div class="G3">
-    @if (ViewBag.stateFeux[2])
+    @if (ViewBag.stateFeux["C1-VR2"])
     {
         <i id="C1-VR2" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-VP2" class="material-icons feux red">directions_walk</i>
     }
-       else
+    else
     {
         <i id="C1-VR2" class="material-icons feux red">fiber_manual_record</i>
         <i id="C1-VP2" class="material-icons feux green">directions_walk</i>
@@ -89,15 +92,15 @@
 
 <i class="material-icons arrow arrow4pos">arrow_forward</i>
 <div class="G4">
-    @if (ViewBag.stateFeux[3])
+    @if (ViewBag.stateFeux["C1-HR1"])
     {
         <i id="C1-HR1" class="material-icons feux green">fiber_manual_record</i>
         <i id="C1-HP1" class="material-icons feux red">directions_walk</i>
     }
     else
     {
-    <i id="C1-HR1" class="material-icons feux red">fiber_manual_record</i>
-    <i id="C1-HP1" class="material-icons feux green">directions_walk</i>
+        <i id="C1-HR1" class="material-icons feux red">fiber_manual_record</i>
+        <i id="C1-HP1" class="material-icons feux green">directions_walk</i>
     }
 
 </div>
@@ -112,8 +115,36 @@
 </div>
 
 
+@using (Html.BeginForm("GestionImprevu", "Home", FormMethod.Post, new { @class = "form-group posForm" }))
+{
+    <div class="row">
+        <div class="col">
+            @foreach (TempFeux item in Model.Feux)
+            {
+                <div class="custom-control custom-radio">
+                    <label class="custom-control-label" for="C1-VR1">
+                        @if (item.Matricule == "C1-VR1")
+                        {
+                            <i class="material-icons">arrow_downward</i>
+                        }
+                        else if (item.Matricule == "C1-HR2")
+                        {
+                            <i class="material-icons">arrow_back</i>
+                        }
+                        else if (item.Matricule == "C1-VR2")
+                        {
+                            <i class="material-icons">arrow_upward</i>
+                        }
+                        else if (item.Matricule == "C1-HR1")
+                        {
+                            <i class="material-icons">arrow_forward</i>
+                        }
+                    </label>
+                    @Html.TextBox(item.Matricule, null, new { @type = "number", @class = "form-control", @placeholder = "Nombre de voiture a ajouter sur la voie" })
+                </div>
+            }
 
-
-
-
-
+            <button type="submit" class="btn btn-primary">Valider</button>
+        </div>
+    </div>
+}
