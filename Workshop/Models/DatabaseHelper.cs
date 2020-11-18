@@ -305,6 +305,7 @@ namespace Workshop.Models
         public void SetEtatFeu(string matricule, bool etat, int heure, int minute, int jour)
         {
             //do something
+            //command.ExecuteNonQuery();
         }
 
 
