@@ -10,14 +10,12 @@ namespace Workshop.Models
 {
     public class DatabaseHelper
     {
-        private MySqlConnectionStringBuilder _builder { get; set; }
-
-        private string _connectionString { get; set; }
+        public MySqlConnectionStringBuilder Builder { get; set; }
 
 
         public DatabaseHelper()
         {
-            _builder = new MySqlConnectionStringBuilder
+            Builder = new MySqlConnectionStringBuilder
             {
                 Server = "vps-f0d101aa.vps.ovh.net",
                 Database = "workshop",
@@ -25,8 +23,6 @@ namespace Workshop.Models
                 Password = "EPSIworkshop2020*",
                 SslMode = MySqlSslMode.None
             };
-
-            _connectionString = "server=vps-f0d101aa.vps.ovh.net;user=BLegendre;database=workshop;password=EPSIworkshop2020*";
         }
 
         //Script d'insertion
@@ -132,7 +128,7 @@ namespace Workshop.Models
 
         public void insertOneEtat(Etat etat)
         {
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
@@ -151,7 +147,7 @@ namespace Workshop.Models
 
         public void insertOneFeu(Feu feu)
         {
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
@@ -168,7 +164,7 @@ namespace Workshop.Models
         {
             Dictionary<string, Feu> feux = new Dictionary<string, Feu>();
 
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
@@ -199,7 +195,7 @@ namespace Workshop.Models
         {
             List<Etat> etat = new List<Etat>();
 
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
@@ -233,39 +229,5 @@ namespace Workshop.Models
 
             return etat;
         }
-
-
-        // CECI EST UN EXEMPLE
-        //public List<Personne> SelectPersonne()
-        //{
-        //    List<Personne> personnes = new List<Personne>();
-
-        //    using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
-        //    {
-        //        connection.Open();
-
-        //        using (MySqlCommand command = connection.CreateCommand())
-        //        {
-        //            command.CommandText = "SELECT * FROM Personne";
-
-        //            using (MySqlDataReader reader = command.ExecuteReader())
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    Personne personne = new Personne
-        //                    {
-        //                        Id = reader.GetInt32("Id"),
-        //                        Nom = reader.GetString("Nom"),
-        //                        Prenom = reader.GetString("Prenom"),
-        //                    };
-
-        //                    personnes.Add(personne);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return personnes;
-        //}
     }
 }
