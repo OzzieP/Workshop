@@ -10,6 +10,8 @@ namespace Workshop.Controllers
     {
         public ActionResult Index()
         {
+            Boolean[] stateFeux = new Boolean[] { true, false, true, false };
+            ViewBag.stateFeux = stateFeux;
             return View();
         }
 

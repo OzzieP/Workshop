@@ -15,8 +15,17 @@
 
 <i class="material-icons arrow arrow1pos">arrow_downward</i>
 <div class="G1">
-    <i id="C1-VR1" class="material-icons feux">fiber_manual_record</i>
-    <i id="C1-VP1" class="material-icons feux">directions_walk</i>
+    @if (ViewBag.stateFeux[0])
+    {
+        <i id="C1-VR1" class="material-icons feux green">fiber_manual_record</i>
+        <i id="C1-VP1" class="material-icons feux red">directions_walk</i>
+    }
+    else
+    {
+        <i id="C1-VR1" class="material-icons feux red">fiber_manual_record</i>
+        <i id="C1-VP1" class="material-icons feux green">directions_walk</i>
+    }
+
 </div>
 <div class="pieton1">
     <div class="barp1"></div>
@@ -30,8 +39,18 @@
 
 <i class="material-icons arrow arrow2pos">arrow_back</i>
 <div class="G2">
-    <i id="C1-HR2" class="material-icons feux">fiber_manual_record</i>
-    <i id="C1-HR2" class="material-icons feux">directions_walk</i>
+    @if (ViewBag.stateFeux[1])
+     {
+        <i id="C1-HR2" class="material-icons feux green">fiber_manual_record</i>
+        <i id="C1-HP2" class="material-icons feux red">directions_walk</i>
+     }
+        else
+    {
+        <i id="C1-HR2" class="material-icons feux red">fiber_manual_record</i>
+        <i id="C1-HP2" class="material-icons feux green">directions_walk</i>
+
+    }
+
 </div>
 <div class="pieton2">
     <div class="barp2"></div>
@@ -45,8 +64,18 @@
 
 <i class="material-icons arrow arrow3pos">arrow_upward</i>
 <div class="G3">
-    <i id="C1-VR2" class="material-icons feux">fiber_manual_record</i>
-    <i id="C1-VP2" class="material-icons feux">directions_walk</i>
+    @if (ViewBag.stateFeux[2])
+    {
+        <i id="C1-VR2" class="material-icons feux green">fiber_manual_record</i>
+        <i id="C1-VP2" class="material-icons feux red">directions_walk</i>
+    }
+       else
+    {
+        <i id="C1-VR2" class="material-icons feux red">fiber_manual_record</i>
+        <i id="C1-VP2" class="material-icons feux green">directions_walk</i>
+    }
+
+
 </div>
 <div class="pieton3">
     <div class="barp1"></div>
@@ -60,8 +89,17 @@
 
 <i class="material-icons arrow arrow4pos">arrow_forward</i>
 <div class="G4">
-    <i id="C1-HR1" class="material-icons feux">fiber_manual_record</i>
-    <i id="C1-HP1" class="material-icons feux">directions_walk</i>
+    @if (ViewBag.stateFeux[3])
+    {
+        <i id="C1-HR1" class="material-icons feux green">fiber_manual_record</i>
+        <i id="C1-HP1" class="material-icons feux red">directions_walk</i>
+    }
+    else
+    {
+    <i id="C1-HR1" class="material-icons feux red">fiber_manual_record</i>
+    <i id="C1-HP1" class="material-icons feux green">directions_walk</i>
+    }
+
 </div>
 <div class="pieton4">
     <div class="barp2"></div>
