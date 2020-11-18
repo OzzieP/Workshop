@@ -170,9 +170,8 @@
     </Compile>
     <Compile Include="Models\Etat.cs" />
     <Compile Include="Models\Feu.cs" />
-    <Compile Include="Models\Jour.cs" />
-    <Compile Include="Models\Horaire.cs" />
     <Compile Include="Models\DatabaseHelper.cs" />
+    <Compile Include="Models\JourEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,5 @@ namespace Workshop.Models
     {
         public int idFeu { get; set; }
         public string matricule { get; set; }
-        public string type { get; set; }
     }
 }

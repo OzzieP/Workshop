@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 
 namespace Workshop.Models
 {
-    public class Jour
+    public enum JourEnum
     {
-        public int idJour { get; set; }
-        public string libelle { get; set; }
+        Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi, Dimanche
     }
 }
