@@ -10,8 +10,14 @@ namespace Workshop.Controllers
     {
         public ActionResult Index()
         {
-            Boolean[] stateFeux = new Boolean[] { true, false, true, false };
-            ViewBag.stateFeux = stateFeux;
+            Dictionary<String, Boolean> arr = new Dictionary<string, bool>();
+
+            arr.Add("C1-VR1", true);
+            arr.Add("C1-VR2", true);
+            arr.Add("C1-HR1", false);
+            arr.Add("C1-HR2", false);
+
+            ViewBag.stateFeux = arr;
             return View();
         }
 
