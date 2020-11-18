@@ -4,24 +4,188 @@
 
 
 }
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Jours</th>
-            <th scope="col">Matricule</th>
-            <th scope="col">Nombre de voiture</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var etat in ViewBag.data)
-        {
-            <tr>
-                <th scope="row">@etat.jour</th>
-                <td>@etat.feu.matricule</td>
-                <td>@etat.nbPassant</td>
-            </tr>
-        }
-        
-    </tbody>
-</table>
+
+<div class="thumbnail">
+    <div class="caption">
+        <h3>Prévisions du nombre de véhicules à venir</h3>
+            <div class="container-fluid">
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3>Lundi</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Matricule</th>
+                                        <th scope="col">Nombre de véhicule prévu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var etat in ViewBag.lundi)
+                                    {
+                                        <tr>
+                                            <td>@etat.feu.matricule</td>
+                                            <td>@etat.nbPassant</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3>Mardi</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Matricule</th>
+                                        <th scope="col">Nombre de véhicule prévu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var etat in ViewBag.mardi)
+                                    {
+                                        <tr>
+                                            <td>@etat.feu.matricule</td>
+                                            <td>@etat.nbPassant</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3>Mercredi</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Matricule</th>
+                                        <th scope="col">Nombre de véhicule prévu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var etat in ViewBag.mercredi)
+                                    {
+                                        <tr>
+                                            <td>@etat.feu.matricule</td>
+                                            <td>@etat.nbPassant</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3>Jeudi</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Matricule</th>
+                                        <th scope="col">Nombre de véhicule prévu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var etat in ViewBag.jeudi)
+                                    {
+                                        <tr>
+                                            <td>@etat.feu.matricule</td>
+                                            <td>@etat.nbPassant</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3>Vendredi</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Matricule</th>
+                                        <th scope="col">Nombre de véhicule prévu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var etat in ViewBag.vendredi)
+                                    {
+                                        <tr>
+                                            <td>@etat.feu.matricule</td>
+                                            <td>@etat.nbPassant</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3>Samedi</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Matricule</th>
+                                        <th scope="col">Nombre de véhicule prévu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var etat in ViewBag.samedi)
+                                    {
+                                        <tr>
+                                            <td>@etat.feu.matricule</td>
+                                            <td>@etat.nbPassant</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h3>Dimanche</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Matricule</th>
+                                        <th scope="col">Nombre de véhicule prévu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var etat in ViewBag.dimanche)
+                                    {
+                                        <tr>
+                                            <td>@etat.feu.matricule</td>
+                                            <td>@etat.nbPassant</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
