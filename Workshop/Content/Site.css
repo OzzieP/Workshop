@@ -30,8 +30,13 @@ body {
 .background {
     width: 100vw;
     height: 100vh;
-}
 
+}
+.posForm {
+    position: absolute;
+    top:15%;
+    left:5%;
+}
 .route1 {
     width: 300px;
     height: calc(100vh - 56px);
