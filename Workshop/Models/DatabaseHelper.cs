@@ -13,12 +13,13 @@ namespace Workshop.Models
     {
         public MySqlConnectionStringBuilder Builder { get; set; }
 
+        private string _connectionString { get; set; }
 
         public DatabaseHelper()
         {
             _connectionString = "Data Source=146.59.229.11;Initial Catalog=Workshop;User ID=admin;Password=EPSIworkshop2020*";
 
-            /* _builder = new MySqlConnectionStringBuilder
+             Builder = new MySqlConnectionStringBuilder
              {
                  Server = "vps-f0d101aa.vps.ovh.net",
                  Database = "workshop",
@@ -27,7 +28,7 @@ namespace Workshop.Models
                  SslMode = MySqlSslMode.None
              };
 
-             _connectionString = "server=vps-f0d101aa.vps.ovh.net;user=BLegendre;database=workshop;password=EPSIworkshop2020*";*/
+             //_connectionString = "server=vps-f0d101aa.vps.ovh.net;user=BLegendre;database=workshop;password=EPSIworkshop2020*";
         }
 
         //Script d'insertion
@@ -280,7 +281,7 @@ namespace Workshop.Models
                 heureCinqMinutesAvant -= 1;
             }
             int jour = (int)DateTime.Today.DayOfWeek;
-            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
