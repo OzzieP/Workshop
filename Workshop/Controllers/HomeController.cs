@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using Workshop.ViewModels;
+
 namespace Workshop.Controllers
 {
     public class HomeController : Controller
@@ -18,11 +20,14 @@ namespace Workshop.Controllers
             arr.Add("C1-HR2", false);
 
             ViewBag.stateFeux = arr;
-            return View();
+
+            FeuxViewModel viewModel = new FeuxViewModel();
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult GestionImprevu(FormCollection collection)
+        public ActionResult GestionImprevu(FormCollection formCollection)
         {
             try
             {
@@ -33,6 +38,11 @@ namespace Workshop.Controllers
                 arr.Add("C1-HR2", true);
 
                 ViewBag.stateFeux = arr;
+
+                var abc = Request.Form["C1-VR1"];
+                var abc2 = Request.Form["C1-VR2"];
+                var abc3 = Request.Form["C1-HR1"];
+                var abc4 = Request.Form["C1-HR2"];
 
                 return RedirectToAction("Index");
             }
