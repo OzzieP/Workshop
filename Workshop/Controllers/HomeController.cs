@@ -13,12 +13,13 @@ namespace Workshop.Controllers
     {
         public ActionResult Index()
         {
-            Dictionary<String, Boolean> arr = new Dictionary<string, bool>();
+            DatabaseHelper database = new DatabaseHelper();
+            Dictionary<String, Etat> arr = new Dictionary<string, Etat>();
 
-            arr.Add("C1-VR1", true);
-            arr.Add("C1-VR2", true);
-            arr.Add("C1-HR1", false);
-            arr.Add("C1-HR2", false);
+            arr.Add("C1-VR1", database.GetEtatFeu("C1-VR1"));
+            arr.Add("C1-VR2", database.GetEtatFeu("C1-VR2"));
+            arr.Add("C1-HR1", database.GetEtatFeu("C1-HR1"));
+            arr.Add("C1-HR2", database.GetEtatFeu("C1-HR2"));
 
             ViewBag.stateFeux = arr;
 
@@ -32,20 +33,38 @@ namespace Workshop.Controllers
         {
             try
             {
-                Dictionary<String, Boolean> arr = new Dictionary<string, bool>();
-                arr.Add("C1-VR1", false);
-                arr.Add("C1-VR2", false);
-                arr.Add("C1-HR1", true);
-                arr.Add("C1-HR2", true);
+                DatabaseHelper database = new DatabaseHelper();
+                Boolean lastFiveMinuteFalse = true;
 
-                ViewBag.stateFeux = arr;
+                int C1_VR1 = int.Parse(Request.Form["C1-VR1"]);
+                int C1_VR2 = int.Parse(Request.Form["C1-VR2"]);
+                int C1_HR1 = int.Parse(Request.Form["C1-HR1"]);
+                int C1_HR2 = int.Parse(Request.Form["C1-HR2"]);
 
-                var abc = Request.Form["C1-VR1"];
-                var abc2 = Request.Form["C1-VR2"];
-                var abc3 = Request.Form["C1-HR1"];
-                var abc4 = Request.Form["C1-HR2"];
+                //je vérifie que c=ca fait pas 5 minutes de rouge
+                //si pas 5 minutes de rouge -> celui qui a le plus de voiture est vert ainsi que son opposé
+                //par conséquence les autres passent sont rouge
+                //si plus de 5 minutes -> celui qui a le plus de voiture passe rouge pendant la minute
+                //par conséquence les autres passent au vert
 
-                return RedirectToAction("Index");
+                if (C1_VR1 > C1_HR1 && C1_VR1 > C1_HR2)
+                {
+                    lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-HR1");
+                } 
+                else if (C1_VR2 > C1_HR1 && C1_VR2 > C1_HR2)
+                {
+                    lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-HR1");
+                } 
+                else if ((C1_HR1 > C1_VR1 && C1_HR1 > C1_VR2))
+                {
+                    lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-VR1");
+                } 
+                else if (C1_HR2 > C1_VR1 && C1_HR2 > C1_VR2)
+                {
+                    lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-VR1");
+                }
+
+                    return RedirectToAction("Index");
             }
             catch
             {

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web.WebPages;
 using ConditionalCompilationElseIf = Microsoft.Ajax.Utilities.ConditionalCompilationElseIf;
@@ -15,14 +16,18 @@ namespace Workshop.Models
 
         public DatabaseHelper()
         {
-            Builder = new MySqlConnectionStringBuilder
-            {
-                Server = "vps-f0d101aa.vps.ovh.net",
-                Database = "workshop",
-                UserID = "BLegendre",
-                Password = "EPSIworkshop2020*",
-                SslMode = MySqlSslMode.None
-            };
+            _connectionString = "Data Source=146.59.229.11;Initial Catalog=Workshop;User ID=admin;Password=EPSIworkshop2020*";
+
+            /* _builder = new MySqlConnectionStringBuilder
+             {
+                 Server = "vps-f0d101aa.vps.ovh.net",
+                 Database = "workshop",
+                 UserID = "BLegendre",
+                 Password = "EPSIworkshop2020*",
+                 SslMode = MySqlSslMode.None
+             };
+
+             _connectionString = "server=vps-f0d101aa.vps.ovh.net;user=BLegendre;database=workshop;password=EPSIworkshop2020*";*/
         }
 
         //Script d'insertion
@@ -229,5 +234,109 @@ namespace Workshop.Models
 
             return etat;
         }
+
+        public Etat GetEtatFeu(string matricule)
+        {
+            Etat etat =  new Etat();
+            int heure = DateTime.Now.Hour;
+            int minute = DateTime.Now.Minute;
+            int jour = (int)DateTime.Today.DayOfWeek;
+            DateTime dateTime = new DateTime(2000, 01, 01, heure, minute, 0);
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "select etat, nbPassant from etat inner join feu on feu.idFeu = etat.idFeu where feu.matricule = @matricule and etat.horaire = @dateTime and etat.jour = @jour";
+
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add(new SqlParameter("@matricule", matricule));
+                    command.Parameters.Add(new SqlParameter("@jour", jour));
+                    command.Parameters.Add(new SqlParameter("@dateTime", dateTime));
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            etat.etat = (bool)reader["etat"];
+                            etat.nbPassant = (int)reader["nbPassant"];
+                        }
+                    }
+                }
+            }
+            return etat;
+        }
+
+        public Boolean LastFiveMinuteFalse (string matricule)
+        {
+            Boolean falseLastFiveMinutes = true;
+            int heure = DateTime.Now.Hour;
+            int heureCinqMinutesAvant = DateTime.Now.Hour;
+            int minute = DateTime.Now.Minute;
+            int cinqMinutesAvant = DateTime.Now.Minute - 6;
+            if (cinqMinutesAvant < 0)
+            {
+                cinqMinutesAvant += 60;
+                heureCinqMinutesAvant -= 1;
+            }
+            int jour = (int)DateTime.Today.DayOfWeek;
+            using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+            {
+                connection.Open();
+
+                using (MySqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "select etat from etat inner join feu on feu.idFeu = etat.idFeu where feu.matricule = '"+matricule+ "' and etat.horaire > '0001-01-01 " + heureCinqMinutesAvant + ":" + cinqMinutesAvant + ":00' and etat.horaire < '0001-01-01 " + heure + ":" + minute + ":00' and etat.jour = "+jour;
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            falseLastFiveMinutes = (int)reader.GetInt32("etat") != 0 ? false : falseLastFiveMinutes;
+                        }
+                    }
+                }
+            }
+            return falseLastFiveMinutes;
+        }
+        
+        public void SetEtatFeu(string matricule, bool etat, int heure, int minute, int jour)
+        {
+            //do something
+        }
+
+
+        // CECI EST UN EXEMPLE
+        //public List<Personne> SelectPersonne()
+        //{
+        //    List<Personne> personnes = new List<Personne>();
+
+        //    using (MySqlConnection connection = new MySqlConnection(_builder.ConnectionString))
+        //    {
+        //        connection.Open();
+
+        //        using (MySqlCommand command = connection.CreateCommand())
+        //        {
+        //            command.CommandText = "SELECT * FROM Personne";
+
+        //            using (MySqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    Personne personne = new Personne
+        //                    {
+        //                        Id = reader.GetInt32("Id"),
+        //                        Nom = reader.GetString("Nom"),
+        //                        Prenom = reader.GetString("Prenom"),
+        //                    };
+
+        //                    personnes.Add(personne);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return personnes;
+        //}
     }
 }
