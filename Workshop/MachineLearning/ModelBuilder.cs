@@ -20,6 +20,8 @@ namespace Workshop.MachineLearning
 
         private static string _connectionString = "Data Source=146.59.229.11;Initial Catalog=Workshop;User ID=admin;Password=EPSIworkshop2020*";
 
+        public static List<FeuForecast> FeuForecasts;
+
 
         public static void CreateModel(int idFeu, int numWeek)
         {
@@ -54,7 +56,7 @@ namespace Workshop.MachineLearning
             var forecastEngine = forecaster.CreateTimeSeriesEngine<ModelInput, ModelOutput>(_mlContext);
             forecastEngine.CheckPoint(_mlContext, modelPath);
 
-            Forecast(nextWeekData, 24, forecastEngine, _mlContext);
+            FeuForecasts = Forecast(nextWeekData, 24, forecastEngine, _mlContext);
         }
 
         static List<FeuForecast> Forecast(IDataView testData, int horizon, TimeSeriesPredictionEngine<ModelInput, ModelOutput> forecaster, MLContext mlContext)
