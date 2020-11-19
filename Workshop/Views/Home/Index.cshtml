@@ -11,6 +11,24 @@
 
     function drawChart() {
         const feux = @Html.Raw(Html.Action("RefreshChart"));
+        const idFeux = ['C1-HR1', 'C1-HR2', 'C1-VR1', 'C1-VR2']
+        idFeux.forEach((idFeu) => {
+            if (feux[idFeu].etat) {
+                console.log(document.getElementById(idFeu))
+                document.getElementById(idFeu).classList.remove('red');
+                document.getElementById(idFeu).classList.add('green');
+                const idFeuP = idFeu.replace('R', 'P');
+                document.getElementById(idFeuP).classList.remove('green');
+                document.getElementById(idFeuP).classList.add('red');
+            } else {
+                console.log(document.getElementById(idFeu))
+                document.getElementById(idFeu).classList.remove('green');
+                document.getElementById(idFeu).classList.add('red');
+                const idFeuP = idFeu.replace('R', 'P');
+                document.getElementById(idFeuP).classList.remove('red');
+                document.getElementById(idFeuP).classList.add('green');
+            }
+        });
 
         var data = google.visualization.arrayToDataTable([
             ['Label', 'Value'],
@@ -63,7 +81,26 @@
                     data1.setValue(0, 1, feux['C1-HR2'].nbPassant);
                     data2.setValue(0, 1, feux['C1-VR1'].nbPassant);
                     data3.setValue(0, 1, feux['C1-VR2'].nbPassant);
+                    const idFeux = ['C1-HR1', 'C1-HR2', 'C1-VR1', 'C1-VR2']
+                    idFeux.forEach((idFeu) =>
+                    {
+                        const idFeuP = idFeu.replace('R', 'P');
+                        if (feux[idFeu].etat) {
+                            document.getElementById(idFeu).classList.remove('red');
+                            document.getElementById(idFeu).classList.add('green');
 
+                            document.getElementById(idFeuP).classList.remove('green');
+                            document.getElementById(idFeuP).classList.add('red');
+                        } else {
+                            document.getElementById(idFeu).classList.remove('green');
+                            document.getElementById(idFeu).classList.add('red');
+
+                            document.getElementById(idFeuP).classList.remove('red');
+                            document.getElementById(idFeuP).classList.add('green');
+                        }
+                    }
+                    );
+                   
                     chart.draw(data, options);
                     chart1.draw(data1, options);
                     chart2.draw(data2, options);
@@ -138,55 +175,31 @@
             
             
             <div class="G1">
-                @if (ViewBag.stateFeux["C1-VR1"].etat)
-                {
-                    <i id="C1-VR1" class="material-icons feux green">fiber_manual_record</i>
-                    <i id="C1-VP1" class="material-icons feux red">directions_walk</i>
-                }
-                else
-                {
-                    <i id="C1-VR1" class="material-icons feux red">fiber_manual_record</i>
-                    <i id="C1-VP1" class="material-icons feux green">directions_walk</i>
-                }
+
+                    <i id="C1-VR1" class="material-icons feux">fiber_manual_record</i>
+                    <i id="C1-VP1" class="material-icons feux">directions_walk</i>
+
             </div>
 
             <div class="G2">
-                @if (ViewBag.stateFeux["C1-HR2"].etat)
-                {
-                    <i id="C1-HR2" class="material-icons feux green">fiber_manual_record</i>
-                    <i id="C1-HP2" class="material-icons feux red">directions_walk</i>
-                }
-                else
-                {
-                    <i id="C1-HR2" class="material-icons feux red">fiber_manual_record</i>
-                    <i id="C1-HP2" class="material-icons feux green">directions_walk</i>
-                }
+          
+                    <i id="C1-HR2" class="material-icons feux">fiber_manual_record</i>
+                    <i id="C1-HP2" class="material-icons feux">directions_walk</i>
+     
             </div>
 
             <div class="G3">
-                @if (ViewBag.stateFeux["C1-VR2"].etat)
-                {
-                    <i id="C1-VR2" class="material-icons feux green">fiber_manual_record</i>
-                    <i id="C1-VP2" class="material-icons feux red">directions_walk</i>
-                }
-                else
-                {
-                    <i id="C1-VR2" class="material-icons feux red">fiber_manual_record</i>
-                    <i id="C1-VP2" class="material-icons feux green">directions_walk</i>
-                }
+             
+                    <i id="C1-VR2" class="material-icons feux">fiber_manual_record</i>
+                    <i id="C1-VP2" class="material-icons feux">directions_walk</i>
+         
             </div>
 
             <div class="G4">
-                @if (ViewBag.stateFeux["C1-HR1"].etat)
-                {
-                    <i id="C1-HR1" class="material-icons feux green">fiber_manual_record</i>
-                    <i id="C1-HP1" class="material-icons feux red">directions_walk</i>
-                }
-                else
-                {
-                    <i id="C1-HR1" class="material-icons feux red">fiber_manual_record</i>
-                    <i id="C1-HP1" class="material-icons feux green">directions_walk</i>
-                }
+      
+                    <i id="C1-HR1" class="material-icons feux">fiber_manual_record</i>
+                    <i id="C1-HP1" class="material-icons feux">directions_walk</i>
+                
             </div>
         </div>
     </div>
