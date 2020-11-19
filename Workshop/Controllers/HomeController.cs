@@ -34,36 +34,41 @@ namespace Workshop.Controllers
             try
             {
                 DatabaseHelper database = new DatabaseHelper();
-                Boolean lastFiveMinuteFalse = true;
+                /*Boolean lastFiveMinuteFalse = true;*/
 
-                int C1_VR1 = int.Parse(Request.Form["C1-VR1"]);
-                int C1_VR2 = int.Parse(Request.Form["C1-VR2"]);
-                int C1_HR1 = int.Parse(Request.Form["C1-HR1"]);
-                int C1_HR2 = int.Parse(Request.Form["C1-HR2"]);
+                int C1_VR1 = Request.Form["C1-VR1"] != "" ? int.Parse(Request.Form["C1-VR1"]) : 0;
+                int C1_VR2 = Request.Form["C1-VR2"] != "" ? int.Parse(Request.Form["C1-VR2"]) : 0;
+                int C1_HR1 = Request.Form["C1-HR1"] != "" ? int.Parse(Request.Form["C1-HR1"]) : 0;
+                int C1_HR2 = Request.Form["C1-HR2"] != "" ? int.Parse(Request.Form["C1-HR2"]) : 0;
 
-                //je vérifie que c=ca fait pas 5 minutes de rouge
-                //si pas 5 minutes de rouge -> celui qui a le plus de voiture est vert ainsi que son opposé
-                //par conséquence les autres passent sont rouge
-                //si plus de 5 minutes -> celui qui a le plus de voiture passe rouge pendant la minute
-                //par conséquence les autres passent au vert
+                int heure = DateTime.Now.Hour;
+                int minute = DateTime.Now.Minute;
+                int jour = (int)DateTime.Today.DayOfWeek;
+                DateTime dateTime = new DateTime(2000, 01, 01, heure, minute, 0);
 
-                if (C1_VR1 > C1_HR1 && C1_VR1 > C1_HR2)
+                if ((C1_VR1 > C1_HR1 && C1_VR1 > C1_HR2) || (C1_VR2 > C1_HR1 && C1_VR2 > C1_HR2))
                 {
-                    lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-HR1");
+                    /* lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-HR1");*/
+                    database.SetEtatFeu("C1-VR1", 1, dateTime, jour, C1_VR1);
+                    database.SetEtatFeu("C1-VR2", 1, dateTime, jour, C1_VR2);
+                    database.SetEtatFeu("C1-HR1", 0, dateTime, jour, C1_HR1);
+                    database.SetEtatFeu("C1-HR2", 0, dateTime, jour, C1_HR2);
                 } 
-                else if (C1_VR2 > C1_HR1 && C1_VR2 > C1_HR2)
+                else if ((C1_HR1 > C1_VR1 && C1_HR1 > C1_VR2) || (C1_HR2 > C1_VR1 && C1_HR2 > C1_VR2))
                 {
-                    lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-HR1");
-                } 
-                else if ((C1_HR1 > C1_VR1 && C1_HR1 > C1_VR2))
-                {
-                    lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-VR1");
-                } 
-                else if (C1_HR2 > C1_VR1 && C1_HR2 > C1_VR2)
-                {
-                    lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-VR1");
+                    /*lastFiveMinuteFalse = database.LastFiveMinuteFalse("C1-VR1");*/
+                    database.SetEtatFeu("C1-VR1", 0, dateTime, jour, C1_VR1);
+                    database.SetEtatFeu("C1-VR2", 0, dateTime, jour, C1_VR2);
+                    database.SetEtatFeu("C1-HR1", 1, dateTime, jour, C1_HR1);
+                    database.SetEtatFeu("C1-HR2", 1, dateTime, jour, C1_HR2);
                 }
-
+                else
+                {
+                    database.SetnbPassant("C1-VR1", dateTime, jour, C1_VR1);
+                    database.SetnbPassant("C1-VR2", dateTime, jour, C1_VR2);
+                    database.SetnbPassant("C1-HR1", dateTime, jour, C1_HR1);
+                    database.SetnbPassant("C1-HR2", dateTime, jour, C1_HR2);
+                }
                     return RedirectToAction("Index");
             }
             catch
