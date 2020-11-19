@@ -1,191 +1,75 @@
 ﻿
 @{
     ViewBag.Title = "Information";
-
-
 }
 
-<div class="thumbnail">
-    <div class="caption">
-        <h3>Prévisions du nombre de véhicules à venir</h3>
-            <div class="container-fluid">
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>Lundi</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Matricule</th>
-                                        <th scope="col">Nombre de véhicule prévu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var etat in ViewBag.lundi)
-                                    {
-                                        <tr>
-                                            <td>@etat.feu.matricule</td>
-                                            <td>@etat.nbPassant</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+<script type="text/javascript">
 
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>Mardi</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Matricule</th>
-                                        <th scope="col">Nombre de véhicule prévu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var etat in ViewBag.mardi)
-                                    {
-                                        <tr>
-                                            <td>@etat.feu.matricule</td>
-                                            <td>@etat.nbPassant</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+        function AfficheDiagramme() {
+                $.ajax({
+                url: "/home/GetPrev",
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                data: { idFeu: document.getElementById("selectFeu").value },
+                success: function (liste) {
+                    google.charts.load('current', { 'packages': ['corechart'] });
+                    google.charts.setOnLoadCallback(drawChart);
+                    function drawChart() {
+                        var idFeu = document.getElementById("selectFeu").value;
+                        console.log(liste);
+                        var data = google.visualization.arrayToDataTable([
+                            ['Heure', 'Passage', 'Estimation', 'Estimation inférieure', 'Estimation supérieure'],
+                            liste.forEach((item) => {
+                            // ici push les datas dans les bonne colone en utiilsant item
+                                data.push(item.Heure, item.PassantsActuel, item.Estimation, item.EstimationInferieure, item.EstimationSuperieure);
+                            })
+                        ]);
 
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>Mercredi</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Matricule</th>
-                                        <th scope="col">Nombre de véhicule prévu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var etat in ViewBag.mercredi)
-                                    {
-                                        <tr>
-                                            <td>@etat.feu.matricule</td>
-                                            <td>@etat.nbPassant</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                        var options = {
+                            title: 'Prévision du nombre de passages sur 24H',
+                            hAxis: { title: 'Heure', titleTextStyle: { color: '#333' } },
+                            vAxis: { minValue: 0 }
+                        };
 
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>Jeudi</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Matricule</th>
-                                        <th scope="col">Nombre de véhicule prévu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var etat in ViewBag.jeudi)
-                                    {
-                                        <tr>
-                                            <td>@etat.feu.matricule</td>
-                                            <td>@etat.nbPassant</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                        chart.draw(data, options);
+                    }
+                }
+            });
+        }
+    
+</script>
 
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>Vendredi</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Matricule</th>
-                                        <th scope="col">Nombre de véhicule prévu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var etat in ViewBag.vendredi)
-                                    {
-                                        <tr>
-                                            <td>@etat.feu.matricule</td>
-                                            <td>@etat.nbPassant</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+<h3>Prévisions du nombre de véhicules à venir par feu et par jour</h3>
+
+<label>Choix du feu</label>
+
+<select id="selectFeu">
+    @foreach (var feu in ViewBag.feu)
+    {
+        <option value="@feu.idFeu">@feu.matricule</option>
+    }
+</select>
+
+<label>Choix du jours</label>
+
+<select>
+    <option value="1">Lundi</option>
+    <option value="2">Mardi</option>
+    <option value="3">Mercredi</option>
+    <option value="4">Jeudi</option>
+    <option value="5">Vendredi</option>
+    <option value="6">Samedi</option>
+    <option value="0">Dimanche</option>
+</select>
+
+<input type="button" onclick="AfficheDiagramme()" name="btPrev" value="Prévisions" />
+
+<div id="chart_div"></div>
 
 
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>Samedi</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Matricule</th>
-                                        <th scope="col">Nombre de véhicule prévu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var etat in ViewBag.samedi)
-                                    {
-                                        <tr>
-                                            <td>@etat.feu.matricule</td>
-                                            <td>@etat.nbPassant</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>Dimanche</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Matricule</th>
-                                        <th scope="col">Nombre de véhicule prévu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var etat in ViewBag.dimanche)
-                                    {
-                                        <tr>
-                                            <td>@etat.feu.matricule</td>
-                                            <td>@etat.nbPassant</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 
 

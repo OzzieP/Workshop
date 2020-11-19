@@ -11,6 +11,8 @@ namespace Workshop.MachineLearning
 
         public float Semaine { get; set; }
 
+        public float Heure { get; set; }
+
         public float PassantsActuel { get; set; }
 
         public float EstimationInferieure { get; set; }
@@ -24,10 +26,11 @@ namespace Workshop.MachineLearning
 
         }
 
-        public FeuForecast(string jour, float semaine, float passantsActuel, float estimationInferieure, float estimation, float estimationSuperieure)
+        public FeuForecast(string jour, float semaine, float heure, float passantsActuel, float estimationInferieure, float estimation, float estimationSuperieure)
         {
             Jour = jour;
             Semaine = semaine;
+            Heure = heure;
             PassantsActuel = passantsActuel;
             EstimationInferieure = estimationInferieure;
             Estimation = estimation;

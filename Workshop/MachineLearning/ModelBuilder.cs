@@ -73,7 +73,7 @@ namespace Workshop.MachineLearning
                     float lowerEstimate = Math.Max(0, forecast.LowerBoundPassants[index]);
                     float estimate = forecast.ForecastedPassants[index];
                     float upperEstimate = forecast.UpperBoundPassants[index];
-                    FeuForecast feu = new FeuForecast(jour, semaine, actualPassants, lowerEstimate, estimate, upperEstimate);
+                    FeuForecast feu = new FeuForecast(jour, semaine, index++, actualPassants, lowerEstimate, estimate, upperEstimate);
 
                     return feu;
                 });

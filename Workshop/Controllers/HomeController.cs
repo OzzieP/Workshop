@@ -7,6 +7,9 @@ using Workshop.Models;
 using System.Web.Script.Serialization;
 
 using Workshop.ViewModels;
+using Workshop.MachineLearning;
+using System.Globalization;
+using System.Diagnostics;
 
 namespace Workshop.Controllers
 {
@@ -41,7 +44,25 @@ namespace Workshop.Controllers
             var json = new JavaScriptSerializer().Serialize(arr);
             return json;
         }
-        
+
+        public string GetPrev(int idFeu)
+        {
+            Debug.Write("Debugtest");
+            Debug.Write("Mon id feu  :" + idFeu);
+            var currentCulture = new CultureInfo("fr-FR");
+            var weekNo = currentCulture.Calendar.GetWeekOfYear(
+            DateTime.Now,
+            currentCulture.DateTimeFormat.CalendarWeekRule,
+            currentCulture.DateTimeFormat.FirstDayOfWeek);
+            
+            DatabaseHelper database = new DatabaseHelper();
+            ModelBuilder.CreateModel(idFeu, weekNo);
+            List<FeuForecast> feux = ModelBuilder.FeuForecasts;
+
+            var json = new JavaScriptSerializer().Serialize(feux);
+            return json;
+        }
+
         [HttpPost]
         public ActionResult GestionImprevu(FormCollection formCollection)
         {
@@ -108,21 +129,15 @@ namespace Workshop.Controllers
         public ActionResult Information()
         {
             DatabaseHelper database = new DatabaseHelper();
-            List<Etat> lundi = database.SelectNombreVoitureParVoie(1);
-            List<Etat> mardi = database.SelectNombreVoitureParVoie(2);
-            List<Etat> mercredi = database.SelectNombreVoitureParVoie(3);
-            List<Etat> jeudi = database.SelectNombreVoitureParVoie(4);
-            List<Etat> vendredi = database.SelectNombreVoitureParVoie(5);
-            List<Etat> samedi = database.SelectNombreVoitureParVoie(6);
-            List<Etat> dimanche = database.SelectNombreVoitureParVoie(0);
-            ViewBag.Message = "Page information.";
-            ViewBag.lundi = lundi;
-            ViewBag.mardi = mardi;
-            ViewBag.mercredi = mercredi;
-            ViewBag.jeudi = jeudi;
-            ViewBag.vendredi = vendredi;
-            ViewBag.samedi = samedi;
-            ViewBag.dimanche = dimanche;
+            ViewBag.feu = database.GetListFeu();
+
+
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult GenerateForecast()
+        {
 
 
             return View();

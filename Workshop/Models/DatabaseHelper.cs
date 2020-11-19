@@ -236,6 +236,36 @@ namespace Workshop.Models
             return etat;
         }
 
+        public List<Feu> GetListFeu()
+        {
+            List<Feu> feux = new List<Feu>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string query = "SELECT * from feu";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Feu feu = new Feu
+                            {
+                                idFeu = (int)reader["idFeu"],
+                                matricule = reader["matricule"].ToString()
+                            };
+
+                            feux.Add(feu);
+                        }
+                    }
+                }
+            }
+
+            return feux;
+        }
+
         public Etat GetEtatFeu(string matricule)
         {
             Etat etat =  new Etat();
