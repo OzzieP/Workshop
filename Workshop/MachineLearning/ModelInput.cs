@@ -7,10 +7,12 @@ namespace Workshop.MachineLearning
 {
     public class ModelInput
     {
-        public int Jour { get; set; }
+        public float Semaine { get; set; }
+
+        public float Jour { get; set; }
 
         public string Feu { get; set; }
 
-        public int NbPassants { get; set; }
+        public float NbPassants { get; set; }
     }
 }
