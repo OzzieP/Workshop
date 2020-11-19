@@ -170,46 +170,38 @@
                 <div class="barp2"></div>
                 <div class="barp2"></div>
             </div>
-            
-            
+
             <div class="G1">
-
-                    <i id="C1-VR1" class="material-icons feux">fiber_manual_record</i>
-                    <i id="C1-VP1" class="material-icons feux">directions_walk</i>
-
+                <i id="C1-VR1" class="material-icons feux">fiber_manual_record</i>
+                <i id="C1-VP1" class="material-icons feux">directions_walk</i>
             </div>
 
             <div class="G2">
-          
-                    <i id="C1-HR2" class="material-icons feux">fiber_manual_record</i>
-                    <i id="C1-HP2" class="material-icons feux">directions_walk</i>
-     
+                <i id="C1-HR2" class="material-icons feux">fiber_manual_record</i>
+                <i id="C1-HP2" class="material-icons feux">directions_walk</i>
             </div>
 
             <div class="G3">
-             
-                    <i id="C1-VR2" class="material-icons feux">fiber_manual_record</i>
-                    <i id="C1-VP2" class="material-icons feux">directions_walk</i>
-         
+                <i id="C1-VR2" class="material-icons feux">fiber_manual_record</i>
+                <i id="C1-VP2" class="material-icons feux">directions_walk</i>
             </div>
 
             <div class="G4">
-      
-                    <i id="C1-HR1" class="material-icons feux">fiber_manual_record</i>
-                    <i id="C1-HP1" class="material-icons feux">directions_walk</i>
-                
+                <i id="C1-HR1" class="material-icons feux">fiber_manual_record</i>
+                <i id="C1-HP1" class="material-icons feux">directions_walk</i>
             </div>
+            
+                
+            <div id="chart_div"></div>
+            <div id="chart_div1"></div>
+            <div id="chart_div2"></div>
+            <div id="chart_div3"></div>
         </div>
     </div>
-    
-    <div id="chart_div" style="width: 200px; height: 100px;"></div>
-    <div id="chart_div1" style="width: 200px; height: 100px;"></div>
-    <div id="chart_div2" style="width: 200px; height: 100px;"></div>
-    <div id="chart_div3" style="width: 200px; height: 100px;"></div>
 
     @using (Html.BeginForm("GestionImprevu", "Home", FormMethod.Post, new { @class = "form-group posForm" }))
     {
-        <div clss="inputs">
+        <div class="inputs">
             @foreach (Feu item in Model.Feux)
             {
                 <div class="custom-control custom-radio">
