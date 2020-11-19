@@ -143,10 +143,10 @@ namespace Workshop.Controllers
             return View();
         }
 
-        /*public ActionResult CreateDatabase()
+        public ActionResult CreateDatabase()
         {
             DatabaseHelper.ScriptInsertion();
             return null;
-        }*/
+        }
     }
 }

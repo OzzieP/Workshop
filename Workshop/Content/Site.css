@@ -29,6 +29,8 @@ textarea {
     left: 0;
     right: 0;
     bottom: 0;
+    background-color: rgb(78, 83, 92);
+    overflow: hidden;
 }
 
 
@@ -36,12 +38,15 @@ textarea {
 
 .posForm {
     position: absolute;
-    top: 40px;
+    top: 20px;
     left: 40px;
-    width: 328px;
+    width: 356px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    background-color: rgb(210, 210, 210);
+    padding: 14px;
+    border-radius: 5px;
 }
 
 .posForm .inputs div {
@@ -117,6 +122,7 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     font-size: 18px;
 }
 
@@ -165,7 +171,7 @@ textarea {
     width: 300px;
     height: 80px;
     position: absolute;
-    top: 340px;
+    top: -120px;
 }
 
 .pieton2 {  
@@ -180,7 +186,7 @@ textarea {
     width: 300px;
     height: 80px;
     position: absolute;
-    top: -120px;
+    top: 340px;
 }
 
 .pieton4 {
@@ -207,29 +213,83 @@ textarea {
 /* Affichage des feux */
 
 .G1 {
+    height: 40px;
     position: absolute;
-    top: 16%;
-    left: 37%;
+    top: -100px;
+    left: -80px;
+    display: flex;
+    background-color: black;
 }
 
 .G2 {
+    height: 40px;
     position: absolute;
-    top: 27%;
-    left: 63%;
+    top: -40px;
+    left: 340px;
+    display: flex;
+    background-color: black;
 }
 
 .G3 {
+    height: 40px;
     position: absolute;
-    top: 77%;
-    left: 59%;
+    top: 360px;
+    left: 300px;
+    display: flex;
+    background-color: black;
 }
 
 .G4 {
+    height: 40px;
     position: absolute;
-    top: 68%;
-    left: 33%;
+    top: 300px;
+    left: -120px;
+    display: flex;
+    background-color: black;
 }
 
+/* Affichage des chart */
+#chart_div {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: -260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#chart_div1 {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: 410px;
+    top: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#chart_div2 {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: -260px;
+    left: 15px;
+    display: flex;
+    left: 150px;
+    justify-content: center;
+    align-items: center;
+}
+#chart_div3 {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 410px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Misc */
 .red {
     color: red;
 }
