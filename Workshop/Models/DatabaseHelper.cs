@@ -287,7 +287,7 @@ namespace Workshop.Models
             {
                 connection.Open();
                 string query = "select etat from etat inner join feu on feu.idFeu = etat.idFeu where feu.matricule = @matricule and etat.horaire > @datetime1 and etat.horaire < @datetime2 and etat.jour = @jour";
-                using (SqlCommand command = new SqlCommand())
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.Add(new SqlParameter("@matricule", matricule));
                     command.Parameters.Add(new SqlParameter("@jour", jour));
@@ -298,7 +298,7 @@ namespace Workshop.Models
                     {
                         while (reader.Read())
                         {
-                            falseLastFiveMinutes = (bool)reader["etat"]; /*!= 0 ? false : falseLastFiveMinutes*/
+                            falseLastFiveMinutes = (bool)reader["etat"] ? true : falseLastFiveMinutes;
                         }
                     }
                 }
@@ -306,9 +306,43 @@ namespace Workshop.Models
             return falseLastFiveMinutes;
         }
         
-        public void SetEtatFeu(string matricule, bool etat, int heure, int minute, int jour)
+        public void SetEtatFeu(string matricule, int etat, DateTime datetime , int jour, int nbPassant)
         {
-            //do something
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "UPDATE etat SET etat = @etat, nbPassant = @nbPassant from etat inner join feu on feu.idFeu = etat.idFeu WHERE feu.matricule = @matricule and etat.horaire = @datetime and etat.jour = @jour";
+            
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add(new SqlParameter("@matricule", matricule));
+                    command.Parameters.Add(new SqlParameter("@jour", jour));
+                    command.Parameters.Add(new SqlParameter("@datetime", datetime));
+                    command.Parameters.Add(new SqlParameter("@etat", etat));
+                    command.Parameters.Add(new SqlParameter("@nbPassant", nbPassant));
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void SetnbPassant(string matricule, DateTime datetime, int jour, int nbPassant)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "UPDATE etat SET nbPassant = @nbPassant from etat inner join feu on feu.idFeu = etat.idFeu WHERE feu.matricule = @matricule and etat.horaire = @datetime and etat.jour = @jour";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add(new SqlParameter("@matricule", matricule));
+                    command.Parameters.Add(new SqlParameter("@jour", jour));
+                    command.Parameters.Add(new SqlParameter("@datetime", datetime));
+                    command.Parameters.Add(new SqlParameter("@nbPassant", nbPassant));
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
 
