@@ -134,11 +134,11 @@ namespace Workshop.Models
 
         public void insertOneEtat(Etat etat)
         {
-            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
-                using (MySqlCommand command = connection.CreateCommand())
+                using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = "INSERT INTO etat(idFeu, jour, horaire, nbPassant, etat) VALUES (@feu, @jour, @horaire, @passants, @etat);";
                     command.Parameters.AddWithValue("@feu", etat.feu.idFeu);
@@ -153,11 +153,11 @@ namespace Workshop.Models
 
         public void insertOneFeu(Feu feu)
         {
-            using (MySqlConnection connection = new MySqlConnection(Builder.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Builder.ConnectionString))
             {
                 connection.Open();
 
-                using (MySqlCommand command = connection.CreateCommand())
+                using (SqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = "INSERT INTO feu(matricule) VALUES (@matricule)";
                     command.Parameters.AddWithValue("@matricule", feu.matricule);
