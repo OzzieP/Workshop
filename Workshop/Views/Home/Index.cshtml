@@ -48,7 +48,6 @@
 
           setInterval(function () {
           const feux = @Html.Raw(Html.Action("RefreshChart"))
-          console.log(feux);
               data.setValue(0, 1, feux['C1-HR1'].nbPassant);
               data1.setValue(0, 1, feux['C1-HR2'].nbPassant);
               data2.setValue(0, 1, feux['C1-VR1'].nbPassant);
