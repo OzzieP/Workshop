@@ -1,10 +1,70 @@
 ﻿@model Workshop.ViewModels.FeuxViewModel
-@using Org.BouncyCastle.Crypto.Tls
 @using Workshop.Models
 
 @{
     ViewBag.Title = "Home Page";
 }
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        const feux = @Html.Raw(Html.Action("RefreshChart"));
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['C1-HR1', feux['C1-HR1'].nbPassant],
+          ]);
+          var data1 = google.visualization.arrayToDataTable([
+              ['Label', 'Value'],
+              ['C1-HR2', feux['C1-HR2'].nbPassant],
+
+          ]);
+          var data2 = google.visualization.arrayToDataTable([
+              ['Label', 'Value'],
+              ['C1-VR1', feux['C1-VR1'].nbPassant],
+
+          ]); var data3 = google.visualization.arrayToDataTable([
+              ['Label', 'Value'],
+              ['C1-VR2', feux['C1-VR2'].nbPassant],
+
+          ]);
+
+        var options = {
+            width: 200, height: 100,
+            greenFrom: 0, greenTo: 20,
+          redFrom: 40, redTo: 100,
+          yellowFrom:20, yellowTo: 40,
+          minorTicks: 10
+        };
+
+          var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+          var chart1 = new google.visualization.Gauge(document.getElementById('chart_div1'));
+          var chart2 = new google.visualization.Gauge(document.getElementById('chart_div2'));
+          var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
+
+
+        chart.draw(data, options);
+
+          setInterval(function () {
+          const feux = @Html.Raw(Html.Action("RefreshChart"))
+              data.setValue(0, 1, feux['C1-HR1'].nbPassant);
+              data1.setValue(0, 1, feux['C1-HR2'].nbPassant);
+              data2.setValue(0, 1, feux['C1-VR1'].nbPassant);
+              data3.setValue(0, 1, feux['C1-VR2'].nbPassant);
+
+              chart.draw(data, options);
+              chart1.draw(data1, options);
+              chart2.draw(data2, options);
+              chart3.draw(data3, options);
+
+        }, 1000);
+      }
+</script>
+<div id="chart_div" style="width: 200px; height: 100px;"></div>
+<div id="chart_div1" style="width: 200px; height: 100px;"></div>
+<div id="chart_div2" style="width: 200px; height: 100px;"></div>
+<div id="chart_div3" style="width: 200px; height: 100px;"></div>
 
 <div class="index-container">
     <div class="background">
@@ -83,18 +143,31 @@
             <i id="C1-VP1" class="material-icons feux green">directions_walk</i>
         }
     </div>
-    <div class="G2">
-        @if (ViewBag.stateFeux["C1-HR2"].etat)
-        {
-            <i id="C1-HR2" class="material-icons feux green">fiber_manual_record</i>
-            <i id="C1-HP2" class="material-icons feux red">directions_walk</i>
-        }
-        else
-        {
-            <i id="C1-HR2" class="material-icons feux red">fiber_manual_record</i>
-            <i id="C1-HP2" class="material-icons feux green">directions_walk</i>
-        }
+
+<i class="material-icons arrow arrow2pos">arrow_back</i>
+<div class="G2">
+    @if (ViewBag.stateFeux["C1-HR2"].etat)
+    {
+        <i id="C1-HR2" class="material-icons feux green">fiber_manual_record</i>
+        <i id="C1-HP2" class="material-icons feux red">directions_walk</i>
+    }
+    else
+    {
+        <i id="C1-HR2" class="material-icons feux red">fiber_manual_record</i>
+        <i id="C1-HP2" class="material-icons feux green">directions_walk</i>
+    }
+</div>
+    <div class="pieton2">
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
+        <div class="barp2"></div>
     </div>
+
+    <i class="material-icons arrow arrow3pos">arrow_upward</i>
     <div class="G3">
         @if (ViewBag.stateFeux["C1-VR2"].etat)
         {

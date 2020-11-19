@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Workshop.Models;
+using System.Web.Script.Serialization;
 
 using Workshop.ViewModels;
 
@@ -28,6 +29,19 @@ namespace Workshop.Controllers
             return View(viewModel);
         }
 
+        public string RefreshChart()
+        {
+            DatabaseHelper database = new DatabaseHelper();
+            Dictionary<String, Etat> arr = new Dictionary<string, Etat>();
+
+            arr.Add("C1-VR1", database.GetEtatFeu("C1-VR1"));
+            arr.Add("C1-VR2", database.GetEtatFeu("C1-VR2"));
+            arr.Add("C1-HR1", database.GetEtatFeu("C1-HR1"));
+            arr.Add("C1-HR2", database.GetEtatFeu("C1-HR2"));
+            var json = new JavaScriptSerializer().Serialize(arr);
+            return json;
+        }
+        
         [HttpPost]
         public ActionResult GestionImprevu(FormCollection formCollection)
         {
