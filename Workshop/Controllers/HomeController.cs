@@ -83,7 +83,7 @@ namespace Workshop.Controllers
                     database.SetnbPassant("C1-HR1", dateTime, jour, C1_HR1);
                     database.SetnbPassant("C1-HR2", dateTime, jour, C1_HR2);
                 }
-                    return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             catch
             {
